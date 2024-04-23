@@ -29,7 +29,7 @@ public class TC01_FirstAppiumTest {
 
 
         //url= new URL(" http://172.27.240.1:4723/");
-        url = new URL(" http://localhost:4723/");
+        url = new URL("http://localhost:4723/");
 
         androidDriver = new AndroidDriver(url,options);
 

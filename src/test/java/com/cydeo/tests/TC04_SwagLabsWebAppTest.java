@@ -4,9 +4,11 @@ import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.MobileUtils;
 
 
+import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -23,32 +25,34 @@ public class TC04_SwagLabsWebAppTest extends WebAppTestBase {
 
     @Test
     public void loginTest() {
+
+
         // Navigate to https://www.saucedemo.com/v1/
-        driver.get("https://www.saucedemo.com/v1/");
+        //driver.get("https://www.saucedemo.com/v1/inventory.html");
+        driver.get("https://www.saucedemo.com/v1/index.html");
 
-        //log into application
+        //log into application//TODO ask here I can not write username why--opencmd(line22)after run
+        MobileUtils.wait(2);
+        WebElement userNameBox = driver.findElement(By.id("user-name"));
+        System.out.println(userNameBox.getAttribute("text"));
+       // userNameBox.click();
+        userNameBox.sendKeys(ConfigurationReader.getProperty("userName"));
 
-        WebElement userNameInput = driver.findElement(By.id("user-name"));
+        WebElement passwordBox = driver.findElement(By.id("password"));
+        passwordBox.sendKeys(ConfigurationReader.getProperty("password") + Keys.ENTER);
+       // WebElement loginButton = driver.findElement(new AppiumBy.ByAccessibilityId("test-LOGIN"));
 
-        userNameInput.sendKeys(ConfigurationReader.getProperty("userName"));
 
-        WebElement passwordInput = driver.findElement(By.id("password"));
 
-        passwordInput.sendKeys(ConfigurationReader.getProperty("password"));
 
-        WebElement loginButton = driver.findElement(By.id("login-button"));
-
-        loginButton.click();
 
         MobileUtils.wait(3);
 
-
         //List<WebElement> productList = driver.findElements(By.className("inventory_item"));
-
-        List<WebElement> productList = driver.findElements(By.className("inventory_item_name"));
+        List<WebElement> productList = driver.findElements(By.cssSelector(".inventory_item_name"));
+//        List<WebElement> productList = driver.findElements(By.className("inventory_item_name"));
 
         for (WebElement eachProduct : productList) {
-
             System.out.println("eachProduct = " + eachProduct.getText());
         }
 //if productName is include test check contains t-shirt
@@ -61,7 +65,8 @@ public class TC04_SwagLabsWebAppTest extends WebAppTestBase {
 
         Actions actions = new Actions(driver);
 
-        actions.moveToElement(driver.findElement(By.xpath("//div[@class='inventory_item'][6]"))).perform();
+//        actions.moveToElement(driver.findElement(By.xpath("//div[@class='inventory_item'][6]"))).perform();
+        actions.moveToElement(driver.findElement(By.xpath("(//div[@class='inventory_item_name'])[6]"))).perform();
 
         MobileUtils.wait(3);
 

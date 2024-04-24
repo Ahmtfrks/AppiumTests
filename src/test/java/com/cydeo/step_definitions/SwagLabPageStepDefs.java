@@ -37,6 +37,8 @@ public class SwagLabPageStepDefs {
     @Then("Verifies user can see a sample product item on the homepage")
     public void verifies_user_can_see_a_sample_product_item_on_the_homepage() {
         // System.out.println(((AndroidDriver) driver).getDeviceTime());
+
+        MobileUtils.wait(3);
         String actualSauceLabBackPackItemText = swagLabNativeAppPage.sauceLabBackPackItem.getText();
         String expectedResult = "Sauce Labs Backpack";
 

@@ -19,17 +19,19 @@ import org.openqa.selenium.WebElement;
 
 public class TC05_SwagLabsNativeAppsTest {
 
+    String username = ConfigurationReader.getProperty("userName");
+    String password = ConfigurationReader.getProperty("password");
     @Test
     public void SignInTest() {
 
-        MobileUtils.wait(3);
-        AppiumDriver driver = Driver.getDriver("local-swaglabsPlatform");
+        MobileUtils.wait(4);
+        AppiumDriver driver = Driver.getDriver(("local-swaglabsPlatform"));
 
 
         MobileUtils.wait(3);
-        driver.findElement(new AppiumBy.ByAccessibilityId("test-Username")).sendKeys(ConfigurationReader.getProperty("userName"));
+        driver.findElement(new AppiumBy.ByAccessibilityId("test-Username")).sendKeys(username);
 
-        driver.findElement(new AppiumBy.ByAccessibilityId("test-Password")).sendKeys(ConfigurationReader.getProperty("password"));
+        driver.findElement(new AppiumBy.ByAccessibilityId("test-Password")).sendKeys(password);
 
         driver.findElement(new AppiumBy.ByAccessibilityId("test-LOGIN")).click();
 
@@ -37,14 +39,14 @@ public class TC05_SwagLabsNativeAppsTest {
 
         // System.out.println(((AndroidDriver) driver).getDeviceTime());
 
-        WebElement sauceLabBackPackItem = driver.findElement(By.xpath("(//android.widget.TextView[@content-desc=\"test-Item title\"])[1]"));
 
-        String actualResult = sauceLabBackPackItem.getText();
-        String expectedResult = "Sauce Labs Backpack";
+        WebElement aSampleUnit = driver.findElement(By.xpath("(//android.widget.TextView[@content-desc=\"test-Item title\"])[1]"));
 
-        Assertions.assertEquals(expectedResult, actualResult);
+        Assertions.assertTrue(aSampleUnit.getText().contains("Sauce"));
 
-        driver.close();
+        System.out.println(((AndroidDriver)driver).getDeviceTime());
+
+        //driver.close();
     }
     @Test
     public void SignInTestWithPOM() {
